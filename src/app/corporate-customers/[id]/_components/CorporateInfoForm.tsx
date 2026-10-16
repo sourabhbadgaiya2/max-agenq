@@ -83,7 +83,7 @@ export function CorporateInfoForm({ engine }: { engine: ReturnType<typeof useCor
 
         waitingPeriodInitial: corporate.waitingPeriodInitial === null ? "" : (corporate.waitingPeriodInitial ? "yes" : "no"),
         waitingPeriodNewHires: corporate.waitingPeriodNewHires || "",
-        defineCoverageTiers: corporate.defineCoverageTiers === null ? "" : (corporate.defineCoverageTiers ? "yes" : "no"),
+        defineCoverageTiers: corporate.defineCoverageTiers === null ? "no" : (corporate.defineCoverageTiers ? "yes" : "no"),
         paymentMethod: corporate.paymentMethod || "",
         showEmployerName: corporate.showEmployerName === null ? "" : (corporate.showEmployerName ? "yes" : "no"),
         employeeCount: corporate.employeeCount === null ? "" : corporate.employeeCount,
