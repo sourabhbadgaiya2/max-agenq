@@ -2,7 +2,6 @@
 
 import Script from "next/script";
 import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
 import { useAgenQEnabled } from "@/hooks/useAgenQToggle";
 
 const AGENQ_AGENT_ID = "4354de15-32c2-465c-9c3e-d5e92a742d8b";
@@ -19,7 +18,6 @@ const AGENQ_CONFIG = {
 
 export function AgenQAgent() {
   const mounted = useRef(false);
-  const pathname = usePathname();
   const { enabled } = useAgenQEnabled();
 
   useEffect(() => {
@@ -27,7 +25,6 @@ export function AgenQAgent() {
       mounted.current = false;
       return;
     }
-    if (pathname === "/login") return;
 
     const timer = window.setInterval(() => {
       if (!(window as any).AGENQ?.render || mounted.current) return;
@@ -44,11 +41,9 @@ export function AgenQAgent() {
         initialState: "CLOSED",
       } as any);
     }, 150);
-
     return () => window.clearInterval(timer);
-  }, [pathname, enabled]);
+  }, [enabled]);
 
-  if (pathname === "/login") return null;
   if (!enabled) return null;
 
   return (

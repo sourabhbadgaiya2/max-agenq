@@ -35,6 +35,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useChat } from "@/context/ChatContext";
+import { useAgenQEnabled } from "@/hooks/useAgenQToggle";
 import MaxGuidePointer from "@/components/MaxGuidePointer";
 import { fetchAllCorporates, deleteCorporate } from "@/lib/db";
 import { Corporate } from "@/lib/types";
@@ -337,6 +338,12 @@ export default function RightChatPanel() {
         setActiveWorkflow,
         setWorkflowStepIndex,
     } = useChat();
+    const { enabled: isAgenQEnabled } = useAgenQEnabled();
+
+    useEffect(() => {
+        if (isAgenQEnabled) closeChat();
+    }, [isAgenQEnabled, closeChat]);
+
     const [history, setHistory] = useState<ChatSession[]>([]);
     const [inputValue, setInputValue] = useState("");
     const [isSpeaking, setIsSpeaking] = useState(false);
@@ -2451,6 +2458,8 @@ export default function RightChatPanel() {
             setIsTyping(false);
         }, 2000);
     };
+
+    if (isAgenQEnabled) return null;
 
     return (
         <div

@@ -14,7 +14,7 @@ export default function MaxGreeting() {
     useEffect(() => {
         // Only run this logic if we are NOT currently open and haven't shown yet in this session
         // Also skip if a workflow (like autofill guide) is active
-        if (isOpen || hasGreeted || isWorkflowActive) {
+        if (isAgenQEnabled || isOpen || hasGreeted || isWorkflowActive) {
             return;
         }
 
@@ -46,7 +46,7 @@ export default function MaxGreeting() {
             window.removeEventListener('click', triggerSpeech);
             window.removeEventListener('keydown', triggerSpeech);
         };
-    }, [isOpen, hasGreeted, setHasGreeted, isWorkflowActive]);
+    }, [isAgenQEnabled, isOpen, hasGreeted, setHasGreeted, isWorkflowActive]);
 
     // If chat is opened while we are visible, hide immediately
     useEffect(() => {
@@ -55,7 +55,7 @@ export default function MaxGreeting() {
         }
     }, [isOpen, isVisible]);
 
-    if (!isVisible) return null;
+    if (isAgenQEnabled || !isVisible) return null;
 
     return (
         <div className="fixed inset-0 z-[2000] flex items-center justify-center bg-slate-900/60 backdrop-blur-md animate-Nina-fade-in">

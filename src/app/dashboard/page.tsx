@@ -2,7 +2,6 @@
 
 import AgentUI from "@/components/AgentUi";
 import MaxGreeting from "@/components/MaxGreeting";
-import { AgenQAgent } from "@/components/AgenQAgent";
 import { useChat } from "@/context/ChatContext";
 import { useAgenQEnabled } from "@/hooks/useAgenQToggle";
 import { Sidebar } from "../corporate-customers/[id]/_components/Sidebar";
@@ -399,8 +398,6 @@ export default function DashboardPage() {
           </div>
         </div>
       </main>
-
-      <AgenQAgent />
 
       <style jsx global>{`
         @keyframes fade-in {

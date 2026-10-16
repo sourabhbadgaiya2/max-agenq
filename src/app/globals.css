@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-    --background: #ffffff;
-    --foreground: #0f172a;
+  --background: #ffffff;
+  --foreground: #0f172a;
 }
 
 body {
-    color: var(--foreground);
-    background: var(--background);
-    overflow-x: hidden;
+  color: var(--foreground);
+  background: var(--background);
+  overflow-x: hidden;
 }
 
 /* @keyframes wave {
@@ -26,37 +26,46 @@ body {
 } */
 
 @keyframes microWave {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+    opacity: 0.7;
+  }
 
-    0%,
-    100% {
-        transform: scaleY(0.5);
-        opacity: 0.7;
-    }
-
-    50% {
-        transform: scaleY(1);
-        opacity: 1;
-    }
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes zoomIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .animate-fade-in {
-    animation: fadeIn 0.3s ease-out forwards;
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
 .animate-zoom-in {
-    animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: zoomIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-microwave {
-    animation: microWave 0.8s ease-in-out infinite;
+  animation: microWave 0.8s ease-in-out infinite;
 }

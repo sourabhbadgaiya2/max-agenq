@@ -348,9 +348,9 @@ function AgentModePanel() {
                 <div className="space-y-1">
                     <p className="text-xs font-bold text-slate-900">How it works</p>
                     <p className="text-xs text-slate-600 leading-relaxed">
-                        <span className="font-bold text-slate-900">Toggle OFF →</span> Shows the built-in <span className="font-bold">Ask Nina</span> button (top bar & greeting popup) which opens the default hardcoded right-side panel.
+                        <span className="font-bold text-slate-900">Toggle OFF →</span> Shows the built-in <span className="font-bold">Ask Nina</span> experience, including the default hardcoded right-side panel.
                         <br />
-                        <span className="font-bold text-blue-700">Toggle ON →</span> Hides Ask Nina buttons and displays the real <span className="font-bold">AgenQ SDK floating agent</span> (bottom-right bubble on Dashboard / Home after login).
+                        <span className="font-bold text-blue-700">Toggle ON →</span> Hides the built-in Nina greeting and chat panel, and displays the real <span className="font-bold">AgenQ SDK floating agent</span> throughout the app.
                     </p>
                 </div>
             </div>

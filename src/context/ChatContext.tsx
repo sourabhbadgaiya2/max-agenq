@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, Dispatch, SetStateAction } from "react";
 import { stopSpeech, setGlobalMuteState } from "@/lib/google-tts";
+import { getAgenQEnabled } from "@/hooks/useAgenQToggle";
 
 export interface WorkflowStepItem {
     t: string;
@@ -89,6 +90,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     const toggleChat = useCallback(() => {
+        if (getAgenQEnabled()) return;
+
         setIsOpen((prev) => {
             const next = !prev;
             if (!next) {
@@ -99,6 +102,8 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     const openChat = useCallback((message?: string, silent: boolean = false) => {
+        if (getAgenQEnabled()) return;
+
         if (!silent) stopSpeech();
         if (message) setExternalMessage(silent ? `SILENT:${message}` : message);
         setIsOpen(true);
@@ -169,4 +174,3 @@ export function useChat() {
     }
     return context;
 }
-
