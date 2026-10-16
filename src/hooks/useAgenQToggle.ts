@@ -4,18 +4,20 @@ import { useState, useEffect, useCallback } from "react";
 
 const STORAGE_KEY = "agenq_sdk_enabled";
 const EVENT_NAME = "agenq-toggle-changed";
+const DEFAULT_ENABLED = true;
 
 function readEnabled(): boolean {
-  if (typeof window === "undefined") return false;
+  if (typeof window === "undefined") return DEFAULT_ENABLED;
   try {
-    return localStorage.getItem(STORAGE_KEY) === "true";
+    const savedValue = localStorage.getItem(STORAGE_KEY);
+    return savedValue === null ? DEFAULT_ENABLED : savedValue === "true";
   } catch {
-    return false;
+    return DEFAULT_ENABLED;
   }
 }
 
 export function useAgenQEnabled() {
-  const [enabled, setEnabledState] = useState(false);
+  const [enabled, setEnabledState] = useState(DEFAULT_ENABLED);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
