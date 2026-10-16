@@ -5,15 +5,15 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useAgenQEnabled } from "@/hooks/useAgenQToggle";
 
-const AGENQ_AGENT_ID = "bcf6f3dd-569e-45be-ac55-64870e25aadd";
+const AGENQ_AGENT_ID = "4354de15-32c2-465c-9c3e-d5e92a742d8b";
 const AGENQ_MOUNT_KEY = `agent-mount-state-${AGENQ_AGENT_ID}`;
 
 const AGENQ_CONFIG = {
   agentId: AGENQ_AGENT_ID,
-  projectId: "09f9f457-1f95-49b0-8454-855ee7449370",
-  customerCode: "AWS",
+  projectId: "8a688e41-ac9e-439f-ab96-3d548d39bf50",
+  customerCode: "APPSUMO",
   backendProtocol: "backend-v2",
-  apiBaseUrl: "https://general-backend-dev.aws.agenq.com",
+  apiBaseUrl: "https://general-backend.aws.agenq.com",
   authEndpoint: "/api/agenq/token",
 };
 
@@ -36,7 +36,7 @@ export function AgenQAgent() {
       // Ensure widget starts CLOSED — clear any leftover "OPEN" state from localStorage
       try {
         localStorage.setItem(AGENQ_MOUNT_KEY, "CLOSED");
-      } catch (_) { }
+      } catch (_) {}
 
       // Render the SDK with initialState CLOSED so it doesn't auto-expand
       (window as any).AGENQ.render({
@@ -68,7 +68,9 @@ export function AgenQAgent() {
  * and clicks the actual interactive target (checkbox, label, image, or button) inside it.
  */
 export function triggerAgenQOpen() {
-  console.log("🚀 triggerAgenQOpen called. Searching for AgenQ launcher element...");
+  console.log(
+    "🚀 triggerAgenQOpen called. Searching for AgenQ launcher element...",
+  );
 
   interface Candidate {
     element: HTMLElement;
@@ -87,8 +89,14 @@ export function triggerAgenQOpen() {
 
       if (style.position === "fixed" || style.position === "absolute") {
         // Floating launcher is at the bottom right
-        const isBottomRight = rect.bottom > window.innerHeight - 200 && rect.right > window.innerWidth - 200;
-        const isSmallBubble = rect.width >= 30 && rect.width <= 120 && rect.height >= 30 && rect.height <= 120;
+        const isBottomRight =
+          rect.bottom > window.innerHeight - 200 &&
+          rect.right > window.innerWidth - 200;
+        const isSmallBubble =
+          rect.width >= 30 &&
+          rect.width <= 120 &&
+          rect.height >= 30 &&
+          rect.height <= 120;
 
         if (isBottomRight) {
           score += 50;
@@ -97,12 +105,16 @@ export function triggerAgenQOpen() {
           score += 30;
         }
       }
-    } catch (_) { }
+    } catch (_) {}
 
     // 2. Avatar/image verification
     if (el.tagName === "IMG") {
       const src = (el as HTMLImageElement).src || "";
-      if (src.includes("nina") || src.includes("cloye") || src.includes("agent")) {
+      if (
+        src.includes("nina") ||
+        src.includes("cloye") ||
+        src.includes("agent")
+      ) {
         score += 60;
       }
     }
@@ -110,8 +122,8 @@ export function triggerAgenQOpen() {
     // 3. Class, ID, and attribute matching
     const id = el.id || "";
     const className = typeof el.className === "string" ? el.className : "";
-    const hasAgenqAttr = Array.from(el.attributes).some(attr =>
-      attr.name.includes("agenq") || attr.value.includes("agenq")
+    const hasAgenqAttr = Array.from(el.attributes).some(
+      (attr) => attr.name.includes("agenq") || attr.value.includes("agenq"),
     );
 
     if (id.includes("agenq") || className.includes("agenq") || hasAgenqAttr) {
@@ -133,7 +145,11 @@ export function triggerAgenQOpen() {
     }
 
     // 5. Clickable tag bonus
-    if (el.tagName === "BUTTON" || el.getAttribute("role") === "button" || el.onclick) {
+    if (
+      el.tagName === "BUTTON" ||
+      el.getAttribute("role") === "button" ||
+      el.onclick
+    ) {
       score += 20;
     }
 
@@ -148,7 +164,11 @@ export function triggerAgenQOpen() {
       evaluateElement(node);
     }
 
-    if (node instanceof HTMLElement || node instanceof Document || node instanceof ShadowRoot) {
+    if (
+      node instanceof HTMLElement ||
+      node instanceof Document ||
+      node instanceof ShadowRoot
+    ) {
       const children = node.childNodes;
       for (let i = 0; i < children.length; i++) {
         traverse(children[i]);
@@ -173,7 +193,11 @@ export function triggerAgenQOpen() {
       if (node instanceof HTMLElement && node.matches(selector)) {
         elements.push(node);
       }
-      if (node instanceof HTMLElement || node instanceof Document || node instanceof ShadowRoot) {
+      if (
+        node instanceof HTMLElement ||
+        node instanceof Document ||
+        node instanceof ShadowRoot
+      ) {
         const children = node.childNodes;
         for (let i = 0; i < children.length; i++) {
           search(children[i]);
@@ -189,10 +213,18 @@ export function triggerAgenQOpen() {
 
   if (candidates.length > 0) {
     const best = candidates[0];
-    console.log("🎯 Best candidate found with score", best.score, ":", best.element);
+    console.log(
+      "🎯 Best candidate found with score",
+      best.score,
+      ":",
+      best.element,
+    );
 
     // Deep search inside the candidate for actual interactive targets
-    const inputs = querySelectorAllDeep(best.element, "input[type='checkbox'], input[type='radio']");
+    const inputs = querySelectorAllDeep(
+      best.element,
+      "input[type='checkbox'], input[type='radio']",
+    );
     const labels = querySelectorAllDeep(best.element, "label");
     const imgs = querySelectorAllDeep(best.element, "img");
     const btns = querySelectorAllDeep(best.element, "button, [role='button']");
@@ -215,11 +247,15 @@ export function triggerAgenQOpen() {
 
     console.log("👆 Clicking element:", clickTarget);
     clickTarget.click();
-    clickTarget.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+    clickTarget.dispatchEvent(
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
     return;
   }
 
-  console.warn("⚠️ Heuristics search did not locate candidate. Retrying with fallbacks...");
+  console.warn(
+    "⚠️ Heuristics search did not locate candidate. Retrying with fallbacks...",
+  );
 
   // Selectors fallback
   const selectors = [
@@ -233,7 +269,9 @@ export function triggerAgenQOpen() {
     const el = document.querySelector<HTMLElement>(sel);
     if (el) {
       el.click();
-      el.dispatchEvent(new MouseEvent("click", { bubbles: true, cancelable: true }));
+      el.dispatchEvent(
+        new MouseEvent("click", { bubbles: true, cancelable: true }),
+      );
       return;
     }
   }
